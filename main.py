@@ -13,11 +13,13 @@ def potencia_de_dois(n):
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def main(): 
+def tamanho_particao_valido(tam_particao, tam_memoria):
+    if tam_memoria % tam_particao == 0:
+        return True
+    else:
+        return False
 
-    print("*************************************************************************")
-    print("***********************COMECOU DENOVO ESSE DIABO*************************")
-    print("*************************************************************************")
+def main(): 
 
     while(1):
         #clear_terminal()
@@ -43,7 +45,7 @@ def main():
          
         # Pergunta o tamanho da memoria
         tamanho_memoria = -1
-        while (1):
+        while(1):
             #clear_terminal()
             tamanho_memoria = int(input("Informe o tamanho da memoria:\n> "))
             if potencia_de_dois(tamanho_memoria) == False:
@@ -52,9 +54,19 @@ def main():
                 #clear_terminal()
                 break
         
+        tamanho_particao = -1
+        while(1):
+            tamanho_particao = input("Informe o tamanho da particao:\n> ")
+            if tamanho_particao_valido(int(tamanho_particao), tamanho_memoria) and tamanho_particao.isnumeric():
+                tamanho_particao = int(tamanho_particao)
+                break
+            else:
+                input("Tamanho de partição invalido!\n\nPressione enter para continuar...")
+
+
         # Chama o tipo de particionamento
         if tipo_particionamento == 1:
-            PF.run_particao_fixa(tamanho_memoria, fila_de_entrada)
+            PF.run_particao_fixa(tamanho_memoria, fila_de_entrada, tamanho_particao)
         elif tipo_particionamento == 2:
             pass
         elif tipo_particionamento == 3:
