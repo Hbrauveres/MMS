@@ -1,5 +1,6 @@
 import os 
 import ParticaoFixa as PF
+import AlocacaoDinamica as AD
 
 def potencia_de_dois(n):
     if n == 0:
@@ -49,7 +50,17 @@ def main():
             #clear_terminal()
             tamanho_memoria = int(input("Informe o tamanho da memoria:\n> "))
             if potencia_de_dois(tamanho_memoria) == False:
-                input("Tamanho da memoria deve ser potencia de dois!\n\nPressione enter para continuar...")
+                input("Tamanho da memoria deve ser potencia de dois!\nPressione enter para continuar...")
+            else:
+                #clear_terminal()
+                break
+
+        politica = -1
+        while(1):
+            #clear_terminal()
+            politica = int(input("Informe a politica:\n>[1] Best Fit\n[2] Worst Fit\n> "))
+            if politica != 1 and politica != 2:
+                input("Tamanho da memoria deve ser potencia de dois!\nPressione enter para continuar...")
             else:
                 #clear_terminal()
                 break
@@ -68,7 +79,7 @@ def main():
         if tipo_particionamento == 1:
             PF.run_particao_fixa(tamanho_memoria, fila_de_entrada, tamanho_particao)
         elif tipo_particionamento == 2:
-            pass
+            AD.run_alocacao_dinamica(tamanho_memoria, fila_de_entrada, politica)
         elif tipo_particionamento == 3:
             pass
         
