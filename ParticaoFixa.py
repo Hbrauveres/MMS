@@ -5,18 +5,25 @@ def encontra_primeiro_ads_livre(memoria, tam_memoria):
     return -1
 
 def remove_da_memoria(memoria, tam_memoria, id_processo, particoes):
+    processo_em_memoria = False
+
     for p in particoes:
         if particoes[p][1] == id_processo:
+            processo_em_memoria = True
             particoes[p][0] = "Livre"
             particoes[p][1] = "-"
             break    
-    
+
+    if not processo_em_memoria:
+        print(f"Processo {id_processo} não está na memória!")
+        return memoria
+
     for i in range(0,tam_memoria):
         if memoria[i] == id_processo:
             memoria[i] = '-'
     
     
-    print("Processo removido!")
+    print(f"Processo {id_processo} removido!")
     return memoria
 
 def encontra_primeira_particao_livre(particoes):
@@ -31,7 +38,7 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, parti
     particao_livre = encontra_primeira_particao_livre(particoes)
 
     if particao_livre == -1:
-        print("Memory Overflow!")
+        print(f"Memory Overflow! - Processo {id_processo} não inserido!")
         return memoria
 
     for i in range(0,tamanho_processo):
@@ -39,7 +46,7 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, parti
 
     particoes[particao_livre][0] = "Ocupado"
     particoes[particao_livre][1] = id_processo
-    print("Processo iserido com sucesso!")
+    print(f"Processo {id_processo} inserido com sucesso!")
     
     #count = 0
     #for i in range(endereco_livre,tam_memoria):
@@ -104,7 +111,7 @@ def run_particao_fixa(tam_memoria, fila_de_entrada, tam_particao):
             tam_processo = int(i[2])
             nome_processo = i[1]
             if tam_processo > tam_particao:
-                print("Memory Overflow!")
+                print(f"Memory Overflow! - Processo {i[1]} não inserido!")
             else:
                 memoria = insere_na_memoria(memoria, tam_memoria, i[1], int(i[2]), particoes, tam_particao)
 
