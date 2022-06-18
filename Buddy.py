@@ -5,7 +5,7 @@ def cria_memoria(tam_memoria):
 
 # devolve uma lista com duas listas
 def particiona_memoria(memoria):
-    return (memoria[i::2] for i in range(2))
+    return list((memoria[i::2] for i in range(2)))
 
 # retorna verdadeiro ou falso se o bloco de memória está desocupado (todo preenchido com 0)
 
