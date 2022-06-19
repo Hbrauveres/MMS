@@ -1,15 +1,16 @@
 # cria a memória inicial (preenche a memória com 0)
 def cria_memoria(tam_memoria):
-    return [0 for i in range(tam_memoria)]
+    memoria = []
+    memoria.append([0 for i in range(tam_memoria)])
+    return memoria
 
 
 # devolve uma lista com duas listas
 def particiona_memoria(memoria):
     return list((memoria[i::2] for i in range(2)))
 
+
 # retorna verdadeiro ou falso se o bloco de memória está desocupado (todo preenchido com 0)
-
-
 def checa_memoria_vazia(memoria):
     return memoria.count(memoria[0] == len(memoria))
 
@@ -40,14 +41,20 @@ def run_buddy(tam_memoria, fila_entrada):
             tam_processo = int(i[2])
             nome_processo = i[1]
 
-            memoria = insere_na_memoria(memoria, nome_processo, tam_processo)
+            for bloco in memoria:
+                if (checa_memoria_vazia(bloco)):
+                    memoria = insere_na_memoria(
+                        bloco, nome_processo, tam_processo)
             pass
         elif i[0] == "OUT":
             pass
 
 
-memoria = [0 for i in range(4)]
+# memoria = [0 for i in range(4)]
 
-memoria_particionada = particiona_memoria(memoria, 3)
-for mem in memoria_particionada:
-    print(mem)
+# memoria_particionada = particiona_memoria(memoria, 3)
+# for mem in memoria_particionada:
+#     print(mem)
+
+memoria = cria_memoria(16)
+print(memoria)
