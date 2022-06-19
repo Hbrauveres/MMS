@@ -1,84 +1,115 @@
-from math import inf
+class Node:
+   def __init__(self, size):
+      self.process = None
+      self.size = size
+      self.frag = 0
+      self.livre = True
+      self.next = None
+      self.prev = None
 
-def remove_da_memoria(memoria, tam_memoria, id_processo):
-    for i in range(0,tam_memoria):
-        if memoria[i] == id_processo:
-            memoria[i] = '-'
+class Memory:
+    def __init__(self, size):
+        self.head = Node(size)
 
-    print("Processo removido!")
-    return memoria
+    def try_insert(self,proc_size,proc_id):
+        finished = False
+        node = self.head
+        while(not finished):
+            if node.size >= proc_size:
+                print(f"Tamanho do nodo > Tamanho Processo")
+                if node.livre:
+                    print(f"Nodo Livre")
+                    if node.size/2 >= proc_size:
+                        print(f"Tamanho do nodo/2 >= Tamanho Processo")
+                        print(f"Criando Buddy Nodes")
+                        self.create_buddy(node)
+                        self.print_memory()
+                        node = self.head
+                        input()
+                    else:
+                        print(f"Tamanho do nodo/2 < Tamanho Processo")
+                        print(f"Inserindo Processo")
+                        self.insere_processo(node,proc_id,proc_size)
+                        self.print_memory()
+                        print(f"Processo Inserido")
+                        finished = True
+                        # node.livre = False
+                        # node.process = proc_id
+                else:
+                    print(f"Nodo Ocupado")
+                    if node.next is not None:
+                        print(f"Pegando Proximo Nodo")
+                        node = node.next
+                        print(f"Proximo nodo adquirido")
+                    else:
+                        print("Não há mais nodos")
+                        print("Finalizando")
+                        finished = True
+            else:
+                print(f"Tamanho do nodo < Tamanho Processo")
+                if node.next is not None:
+                    print(f"Pegando Proximo Nodo")
+                    node = node.next
+                    print(f"Proximo nodo adquirido")
+                else:
+                    print("Não há mais nodos")
+                    print("Finalizando")
+                    finished = True
 
-def encontra_slots_livres(memoria, tam_memoria, tam_processo):
-    count = 0
-    slots_livres = []
-    endereco_inicio = 0
+    def create_buddy(self, node):
+        new_size = node.size/2
+        print(f"new size = {new_size}")
+        new_node1 = Node(new_size)
+        new_node2 = Node(new_size)
+        new_node1.next = new_node2
+        new_node2.next = node.next
+        new_node2.prev = new_node1
+        new_node1.prev = node.prev
+        
+        if node.next is not None:
+            print(f"proximo nodo vale: {node.next.size}")
+            node.next.prev = new_node2
 
-    for i in range(0,tam_memoria):
-        if memoria[i] == '-':
-            if count == 0:
-                endereco_inicio = i
+        if node.prev is not None:
+            print(f"nodo anterior vale: {node.prev.size}")
+            node.prev.next = new_node1
 
-            count += 1
-                
-            if(i == tam_memoria - 1) and (count >= tam_processo):
-                slots_livres.append([endereco_inicio,count])
-                
-        elif memoria[i] != '-':
-            if(count != 0) and (count >= tam_processo):
-                slots_livres.append([endereco_inicio,count])	
-            count = 0
+        if new_node1.prev == None:
+            print(f"NEW HEAD! HEAD VALUE = {new_node1.size}")
+            self.head = new_node1
 
-    return(slots_livres)
+    def insere_processo(self, node, proc_id,proc_size):
+        node.livre = False
+        node.frag = node.size - proc_size
+        node.process = proc_id
 
-def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, politica):
-    # procura o primeiro endereco livre
-    slots_livres = encontra_slots_livres(memoria, tam_memoria, tamanho_processo)
-    
-    if slots_livres == []:
-        print(f"Memory Overflow! - Processo {id_processo} não alocado.")
-        return memoria
-    
-    if politica == 1:
-        best_fit = slots_livres[0] # best_fit = [endereco_inicio, tamanho_slot]
-        dif = inf
+    def print_memory(self):
+        node = self.head
+        while node is not None:
+            print(node.livre, node.process, node.size)
+            #if node.prev == None:
+            #    print("None", end =" ")
+            #else:
+            #    print(node.prev.size, end =" ")
+            #print(node.size, end = " ")
+            #if node.next == None:
+            #    print("None")
+            #else:
+            #    print(node.next.size)
+            
+            node = node.next
 
-        for i in slots_livres:
-            if ((i[1] - tamanho_processo) >= 0) and (dif > abs(i[1] - tamanho_processo)):
-                dif = abs(i[1] - tamanho_processo)
-                best_fit = i
-
-        for i in range(best_fit[0], best_fit[0]+tamanho_processo):
-            memoria[i] = id_processo
-        print("Processo alocado!")
-
-    elif(politica == 2):
-        worst_fit = slots_livres[0] # best_fit = [endereco_inicio, tamanho_slot]
-        dif = -inf
-
-        for i in slots_livres:
-            if ((i[1] - tamanho_processo) >= 0) and (dif < abs(i[1] - tamanho_processo)):
-                dif = abs(i[1] - tamanho_processo)
-                worst_fit = i
-
-        for i in range(worst_fit[0], worst_fit[0]+tamanho_processo):
-            memoria[i] = id_processo
-        print("Processo alocado!")
-    
-    return memoria
+    def join_buddy():
+        pass
 
 
-
-memoria = ['-','-','-','A','-','-','-','-','-','-']
-print(memoria)
-memoria = insere_na_memoria(memoria, 10, 'X', 2, 1)
-print(memoria)
-memoria = insere_na_memoria(memoria, 10, 'Y', 3, 1)
-print(memoria)
-memoria = remove_da_memoria(memoria, 10, 'X')
-print(memoria)
-memoria = insere_na_memoria(memoria, 10, 'Z', 5, 1)
-print(memoria)
-memoria = remove_da_memoria(memoria, 10, 'Y')
-print(memoria)
-memoria = remove_da_memoria(memoria, 10, 'Z')
-print(memoria)
+mem = Memory(128)
+mem.try_insert(1,"d")
+mem.try_insert(25,"a")
+mem.try_insert(32,"b")
+mem.try_insert(16,"c")
+mem.try_insert(16,"e")
+mem.try_insert(5,"f")
+mem.try_insert(5,"g")
+mem.try_insert(54,"h")
+mem.print_memory()
