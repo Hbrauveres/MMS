@@ -1,9 +1,10 @@
 class Node:
-   def __init__(self, size):
+   def __init__(self, size, parent=None):
       self.process = None
       self.size = size
       self.frag = 0
       self.livre = True
+      self.parent = parent
       self.next = None
       self.prev = None
 
@@ -59,8 +60,8 @@ class Memory:
     def create_buddy(self, node):
         new_size = node.size/2
         print(f"new size = {new_size}")
-        new_node1 = Node(new_size)
-        new_node2 = Node(new_size)
+        new_node1 = Node(new_size,node)
+        new_node2 = Node(new_size,node)
         new_node1.next = new_node2
         new_node2.next = node.next
         new_node2.prev = new_node1
@@ -99,9 +100,52 @@ class Memory:
             
             node = node.next
 
-    def join_buddy():
+    def get_buddy_node(self,node):
         pass
 
+    def buddy_clean(self):
+        # TERMINAR BUDDY CLEAN!!!!
+        pass
+    
+        '''node = self.head
+        finished = False
+        while not finished:
+            if node.livre:
+                if node.next is not None:
+                    aux_node = node.next
+                    node_par = None
+                    while aux_node is not None:
+                        if node.parent == aux_node.parent:
+                            if aux_node.livre:
+                                node_par = aux_node
+                                break
+                    
+                    node.parent.prev = node.prev
+                    node.parent.next = node_par.next
+                    
+                    if node.prev is not None:
+                        node.prev.next = node.parent
+            
+
+            else:
+                node = node.next'''
+                                    
+
+    def remove_processo(self, id_processo):
+        node = self.head
+        finished = False
+        while not finished and node is not None:
+            if node.process == id_processo:
+                node.livre = True
+                node.process = None
+                node.frag = 0
+                finished = True
+                self.buddy_clean()
+            node = node.next
+        
+        if finished == False:
+            print(f"Processo {id_processo} não encontrado")
+   
 
 mem = Memory(128)
 mem.try_insert(1,"d")
@@ -112,4 +156,5 @@ mem.try_insert(16,"e")
 mem.try_insert(5,"f")
 mem.try_insert(5,"g")
 mem.try_insert(54,"h")
+mem.remove_processo("z")
 mem.print_memory()
