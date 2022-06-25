@@ -95,7 +95,7 @@ def main():
         AD.run_alocacao_dinamica(
             tamanho_memoria, fila_de_entrada, politica)
     elif tipo_particionamento == 3:
-        BD.run_buddy(tamanho_memoria, fila_de_entrada)
+        BD.run_buddy_system(tamanho_memoria, fila_de_entrada)
 
     restart_flag = -1
     while(restart_flag != 0 and restart_flag != 1):
