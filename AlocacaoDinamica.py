@@ -66,9 +66,6 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, polit
     
     return memoria
 
-    # conta todos '-' depois até count == tamanho_processo
-    # se memoria[i] != '-' e count < tamanho_processo reinicia count
-    # se chegar ao fim do for exit com false
 
 def imprime_status_memoria(memoria, tam_memoria):
     status_memoria = []

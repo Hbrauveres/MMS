@@ -31,7 +31,7 @@ class Memory:
                         self.create_buddy(node)
                         #self.print_memory()
                         node = self.head
-                        #input()
+
                     else:
                         #print(f"Tamanho do nodo/2 < Tamanho Processo")
                         #print(f"Inserindo Processo")
@@ -39,8 +39,6 @@ class Memory:
                         #self.print_memory()
                         print(f"Processo {proc_id} Inserido")
                         finished = True
-                        # node.livre = False
-                        # node.process = proc_id
                 else:
                     #print(f"Nodo Ocupado")
                     if node.next is not None:
@@ -102,10 +100,7 @@ class Memory:
             node = node.next
         print("Fragmentacao Interna Total:",frag_total)
         print(output)
-        #while node is not None:
-        #    print(node.livre, node.process, node.size)
-        #    node = node.next
-        #input()
+
 
     def buddy_join(self):
         #print("INICIANDO BUDDY JOIN")

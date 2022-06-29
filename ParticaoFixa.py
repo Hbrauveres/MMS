@@ -46,7 +46,6 @@ def encontra_primeira_particao_livre(particoes):
 
 def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, particoes, tam_particao):
     # procura o primeiro endereco livre
-    # endereco_livre = encontra_primeiro_ads_livre(memoria, tam_memoria)
     particao_livre = encontra_primeira_particao_livre(particoes)
 
     if particao_livre == -1:
@@ -64,30 +63,7 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, parti
     print(f"Processo {id_processo} inserido com sucesso!")
     print(f"Fragmentação Interna Total: {fragmentacao_total}")
 
-    #count = 0
-    # for i in range(endereco_livre,tam_memoria):
-    #    if memoria[i] == '-':
-    #        if count == 0:
-    #            endereco_livre = i
-    #        count += 1
-    #        if count == tamanho_processo:
-    #            for j in range(endereco_livre, endereco_livre + tamanho_processo):
-    #                memoria[j] = id_processo
-    #
-    #            return memoria
-    #    else:
-    #        count = 0
-
-    #print(f"Endereco livre: {endereco_livre}")
-    #print(f"Count: {count}")
-    #print(f"Tamanho processo: {tamanho_processo}")
-
-    #print("Memory Overflow!")
     return memoria
-
-    # conta todos '-' depois até count == tamanho_processo
-    # se memoria[i] != '-' e count < tamanho_processo reinicia count
-    # se chegar ao fim do for exit com false
 
 
 def imprime_status_memoria(memoria, tam_memoria):
@@ -119,9 +95,8 @@ def run_particao_fixa(tam_memoria, fila_de_entrada, tam_particao):
 
     for i in range(0, tam_memoria):
         memoria.append('-')
+
     # Roda fila de entrada
-    
-    
     print("\n\nINICIO EXECUCAO\n")
     imprime_status_memoria(memoria, tam_memoria)
     for i in fila_de_entrada:
