@@ -37,7 +37,7 @@ class Memory:
                         #print(f"Inserindo Processo")
                         self.insere_processo(node,proc_id,proc_size)
                         #self.print_memory()
-                        #print(f"Processo Inserido")
+                        print(f"Processo {proc_id} Inserido")
                         finished = True
                         # node.livre = False
                         # node.process = proc_id
@@ -48,7 +48,7 @@ class Memory:
                         node = node.next
                         #print(f"Proximo nodo adquirido")
                     else:
-                        #print("Não há mais nodos")
+                        print(f"Memory Overflow! Processo {proc_id} não inserido.")
                         #print("Finalizando")
                         finished = True
             else:
@@ -58,7 +58,7 @@ class Memory:
                     node = node.next
                     #print(f"Proximo nodo adquirido")
                 else:
-                    #print("Não há mais nodos")
+                    print(f"Memory Overflow! Processo {proc_id} não inserido.")
                     #print("Finalizando")
                     finished = True
 
@@ -100,7 +100,8 @@ class Memory:
             else:
                 frag_total += node.frag
             node = node.next
-        print(output, frag_total)
+        print("Fragmentacao Interna Total:",frag_total)
+        print(output)
         #while node is not None:
         #    print(node.livre, node.process, node.size)
         #    node = node.next
@@ -179,6 +180,7 @@ class Memory:
                 finished = True
                 self.buddy_join()
                 #self.print_memory()
+                print(f"Processo {id_processo} removido!")
                 break
             node = node.next
         

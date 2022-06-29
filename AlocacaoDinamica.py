@@ -5,7 +5,7 @@ def remove_da_memoria(memoria, tam_memoria, id_processo):
         if memoria[i] == id_processo:
             memoria[i] = '-'
 
-    print("Processo removido!")
+    print(f"Processo {id_processo} removido!")
     return memoria
 
 def encontra_slots_livres(memoria, tam_memoria, tam_processo):
@@ -49,7 +49,7 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, polit
 
         for i in range(best_fit[0], best_fit[0]+tamanho_processo):
             memoria[i] = id_processo
-        print("Processo alocado!")
+        print(f"Processo {id_processo} alocado!")
 
     elif(politica == 2):
         worst_fit = slots_livres[0] # best_fit = [endereco_inicio, tamanho_slot]
@@ -62,7 +62,7 @@ def insere_na_memoria(memoria, tam_memoria, id_processo, tamanho_processo, polit
 
         for i in range(worst_fit[0], worst_fit[0]+tamanho_processo):
             memoria[i] = id_processo
-        print("Processo alocado!")
+        print(f"Processo {id_processo} alocado!")
     
     return memoria
 

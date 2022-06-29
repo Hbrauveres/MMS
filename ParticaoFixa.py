@@ -115,11 +115,14 @@ def run_particao_fixa(tam_memoria, fila_de_entrada, tam_particao):
     for i in range(0, num_particoes):
         particoes[i] = ["Livre", "-"]
 
-    print(particoes)
+    #print(particoes)
 
     for i in range(0, tam_memoria):
         memoria.append('-')
     # Roda fila de entrada
+    
+    
+    print("\n\nINICIO EXECUCAO\n")
     imprime_status_memoria(memoria, tam_memoria)
     for i in fila_de_entrada:
 
